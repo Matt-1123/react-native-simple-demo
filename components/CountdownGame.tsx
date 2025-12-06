@@ -1,26 +1,33 @@
 // @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 
 export default function CountdownTimerGame() {
-  const [timeLeft, setTimeLeft] = useState(10000); // 10 seconds in milliseconds
+  const [duration, setDuration] = useState(5); // Duration in seconds
+  const [timeLeft, setTimeLeft] = useState(5000); // Time left in milliseconds
   const [isRunning, setIsRunning] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [finalTime, setFinalTime] = useState(null);
   const intervalRef = useRef(null);
+  const startTimeRef = useRef(null);
+  const targetTimeRef = useRef(null);
 
   useEffect(() => {
     if (isRunning) {
+      startTimeRef.current = Date.now();
+      targetTimeRef.current = startTimeRef.current + timeLeft;
+
       intervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 10) {
-            clearInterval(intervalRef.current);
-            setIsRunning(false);
-            setIsVisible(true);
-            return 0;
-          }
-          return prev - 10;
-        });
+        const now = Date.now();
+        const remaining = Math.max(0, targetTimeRef.current - now);
+        
+        setTimeLeft(remaining);
+        
+        if (remaining === 0) {
+          clearInterval(intervalRef.current);
+          setIsRunning(false);
+          setIsVisible(true);
+        }
       }, 10);
     }
 
@@ -38,7 +45,7 @@ export default function CountdownTimerGame() {
       setIsVisible(false);
       setFinalTime(null);
       if (timeLeft === 0) {
-        setTimeLeft(10000);
+        setTimeLeft(duration * 1000);
       }
     } else {
       // Stop the countdown and show result
@@ -49,13 +56,21 @@ export default function CountdownTimerGame() {
   };
 
   const handleReset = () => {
-    setTimeLeft(10000);
+    setTimeLeft(duration * 1000);
     setIsRunning(false);
     setIsVisible(true);
     setFinalTime(null);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
+  };
+
+  const handleDurationChange = (text) => {
+    const num = parseInt(text) || 1;
+    const clampedNum = Math.max(1, Math.min(99, num)); // Limit between 1-99 seconds
+    setDuration(clampedNum);
+    setTimeLeft(clampedNum * 1000);
+    setFinalTime(null);
   };
 
   const formatTime = (ms) => {
@@ -79,6 +94,18 @@ export default function CountdownTimerGame() {
       <Text style={styles.title}>Countdown Challenge</Text>
       <Text style={styles.subtitle}>How close can you get to 00:00?</Text>
 
+      <View style={styles.durationSelector}>
+        <Text style={styles.durationLabel}>Duration (seconds):</Text>
+        <TextInput
+          style={styles.durationInput}
+          value={String(duration)}
+          onChangeText={handleDurationChange}
+          keyboardType="number-pad"
+          maxLength={2}
+          editable={!isRunning}
+        />
+      </View>
+
       <View style={styles.timerContainer}>
         {isVisible ? (
           <>
@@ -101,7 +128,7 @@ export default function CountdownTimerGame() {
         </Text>
       </TouchableOpacity>
 
-      {!isRunning && timeLeft !== 10000 && (
+      {!isRunning && timeLeft !== duration * 1000 && (
         <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
           <Text style={styles.resetText}>Reset</Text>
         </TouchableOpacity>
@@ -139,7 +166,31 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     color: '#94a3b8',
-    marginBottom: 60,
+    marginBottom: 30,
+  },
+  durationSelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    gap: 12,
+  },
+  durationLabel: {
+    fontSize: 16,
+    color: '#cbd5e1',
+    fontWeight: '600',
+  },
+  durationInput: {
+    width: 70,
+    height: 45,
+    backgroundColor: '#1e293b',
+    borderWidth: 2,
+    borderColor: '#334155',
+    borderRadius: 12,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    paddingHorizontal: 8,
   },
   timerContainer: {
     minHeight: 120,
