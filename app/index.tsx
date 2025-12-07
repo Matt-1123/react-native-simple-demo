@@ -14,19 +14,19 @@ const HomePage = ({ onNavigate }) => {
         Welcome! 👋
       </Text>
       <Text className="text-lg text-gray-700 text-center mb-8">
-        This is your React Native app with Expo and NativeWind
+        Choose an option below
       </Text>
-      <TouchableOpacity
-        onPress={() => onNavigate('about')}
-        className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg"
-      >
-        <Text className="text-white font-semibold text-lg">Go to About</Text>
-      </TouchableOpacity>
       <TouchableOpacity 
         onPress={() => onNavigate('countdown-timer')}
-        className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg"
+        className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
       >
-        <Text>Go to Countdown Timer</Text>
+        <Text className='text-white font-semibold text-lg'>Countdown Timer</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => onNavigate('about')}
+        className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
+      >
+        <Text className="text-white font-semibold text-lg">About</Text>
       </TouchableOpacity>
     </View>
   );
