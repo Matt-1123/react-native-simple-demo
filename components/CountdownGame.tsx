@@ -75,12 +75,30 @@ export default function CountdownTimerGame({ onNavigate }) {
     setFinalTime(null);
   };
 
+  // const formatTime = (ms) => {
+  //   let totalSeconds;
+  //   let milliseconds;
+  //   let seconds;
+  //   if(ms < 0) {
+  //     totalSeconds = Math.ceil(ms / 1000);
+  //     milliseconds = Math.abs(Math.floor((ms % 1000) / 10))
+  //     seconds = totalSeconds % 60;
+  //   } else {
+  //     totalSeconds = Math.floor(ms / 1000);
+  //     milliseconds = Math.floor((ms % 1000) / 10);
+  //     seconds = totalSeconds % 60;
+  //   }
+  //   return `${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(2, '0')}`;
+  // };
   const formatTime = (ms) => {
     let totalSeconds;
     let milliseconds;
     let seconds;
     if(ms < 0) {
       totalSeconds = Math.ceil(ms / 1000);
+      if(totalSeconds === 0) {
+        totalSeconds = -0;
+      }
       milliseconds = Math.abs(Math.floor((ms % 1000) / 10))
       seconds = totalSeconds % 60;
     } else {
@@ -88,7 +106,13 @@ export default function CountdownTimerGame({ onNavigate }) {
       milliseconds = Math.floor((ms % 1000) / 10);
       seconds = totalSeconds % 60;
     }
-    return `${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(2, '0')}`;
+  
+    // Display -0 if remaining ms is between -1 and -999
+    const secondsStr = (Object.is(totalSeconds, -0)) 
+      ? '-0' 
+      : String(seconds).padStart(2, '0');
+    
+    return `${secondsStr}:${String(milliseconds).padStart(2, '0')}`;
   };
 
   const getResultMessage = () => {
@@ -127,7 +151,7 @@ export default function CountdownTimerGame({ onNavigate }) {
         {isVisible ? (
           <>
             <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
-            {/* <Text style={styles.timer}>{timeLeft}</Text> */}
+            <Text style={styles.timer}>{timeLeft}</Text>
             {finalTime !== null && (
               <Text style={styles.result}>{getResultMessage()}</Text>
             )}
