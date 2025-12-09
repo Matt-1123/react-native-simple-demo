@@ -19,14 +19,16 @@ export default function CountdownTimerGame({ onNavigate }) {
 
       intervalRef.current = setInterval(() => {
         const now = Date.now();
-        const remaining = Math.max(0, targetTimeRef.current - now);
+        const remaining = targetTimeRef.current - now;
         
         setTimeLeft(remaining);
         
-        if (remaining === 0) {
+        // End game at -10 seconds (-10000 ms)
+        if (remaining <= -10000) {
           clearInterval(intervalRef.current);
           setIsRunning(false);
           setIsVisible(true);
+          setTimeLeft(-10000);
         }
       }, 10);
     }
@@ -74,9 +76,18 @@ export default function CountdownTimerGame({ onNavigate }) {
   };
 
   const formatTime = (ms) => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const milliseconds = Math.floor((ms % 1000) / 10);
-    const seconds = totalSeconds % 60;
+    let totalSeconds;
+    let milliseconds;
+    let seconds;
+    if(ms < 0) {
+      totalSeconds = Math.ceil(ms / 1000);
+      milliseconds = Math.abs(Math.floor((ms % 1000) / 10))
+      seconds = totalSeconds % 60;
+    } else {
+      totalSeconds = Math.floor(ms / 1000);
+      milliseconds = Math.floor((ms % 1000) / 10);
+      seconds = totalSeconds % 60;
+    }
     return `${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(2, '0')}`;
   };
 
@@ -116,6 +127,7 @@ export default function CountdownTimerGame({ onNavigate }) {
         {isVisible ? (
           <>
             <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
+            {/* <Text style={styles.timer}>{timeLeft}</Text> */}
             {finalTime !== null && (
               <Text style={styles.result}>{getResultMessage()}</Text>
             )}
