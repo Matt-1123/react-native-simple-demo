@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import CountdownTimerGame from '@/components/CountdownGame';
+import ReflexTest from '@/components/ReflexTest';
 
 import '../global.css'
 
@@ -21,6 +22,12 @@ const HomePage = ({ onNavigate }) => {
         className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
       >
         <Text className='text-white font-semibold text-lg'>Countdown Timer</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        onPress={() => onNavigate('reflex-test')}
+        className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
+      >
+        <Text className='text-white font-semibold text-lg'>Reflex Test</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => onNavigate('about')}
@@ -72,6 +79,8 @@ export default function App() {
         <AboutPage onNavigate={setCurrentPage} />
       ) : currentPage === 'countdown-timer' ? (
         <CountdownTimerGame onNavigate={setCurrentPage} />
+      ) : currentPage === 'reflex-test' ? (
+        <ReflexTest onNavigate={setCurrentPage} />
       ) : null}
     </SafeAreaView>
   );
