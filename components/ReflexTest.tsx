@@ -117,7 +117,7 @@ export default function ReflexTest({ onNavigate }) {
         onPress={handlePress}
       >
         <Text style={styles.buttonText}>
-            {isRunning ? 'Wait...' : 'Start'}
+            {isRunning ? 'Wait...' : isButtonGreen ? 'Go!' : 'Start'}
         </Text>
       </TouchableOpacity>
 
