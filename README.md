@@ -15,3 +15,8 @@ This mini game tests how quickly you can press a button once it turns green. It 
 - **Expo** - React Native framework
 - **Tailwind CSS (NativeWind)** - Utility-first CSS framework for React Native
 
+--- 
+
+## Upcoming Games
+- **Button Spammer** - Press the button as many times as possible before the timer runs out!
+- **Green Zone Quick Time Event** - Stop the indicator rotating within a circular gauge when it is within the green zone of the circle. On each success, the green zone shrinks. On each failure, the zone expands. Try to get the green zone to shrink to as few degrees as possible!
