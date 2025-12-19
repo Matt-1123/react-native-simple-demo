@@ -80,10 +80,18 @@ export default function ReflexTest({ onNavigate }) {
     };
   }, [isCountUpRunning]);
   
-  const handlePress = () => {
+  const handleStartPress = () => {
     setIsCountdownRunning(!isCountdownRunning);
     console.log('isCountdownRunning: ', isCountdownRunning)
   };
+
+  const handleGoPress = () => {
+    console.log('handle go press')
+  }
+
+  const handleWrongPress = () => {
+    console.log('handle wrong press');
+  }
 
   const handleReset = () => {
     console.log('reset')
@@ -140,7 +148,7 @@ export default function ReflexTest({ onNavigate }) {
       )} */}
       <TouchableOpacity
         style={[styles.button, isCountdownRunning && styles.buttonRunning, isButtonGreen && styles.buttonGreen]}
-        onPress={handlePress}
+        onPress={isCountdownRunning ? handleWrongPress : isButtonGreen ? handleGoPress : handleStartPress}
       >
         <Text style={styles.buttonText}>
             {isCountdownRunning ? 'Wait...' : isButtonGreen ? 'Go!' : 'Start'}
