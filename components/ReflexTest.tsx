@@ -27,9 +27,6 @@ export default function ReflexTest({ onNavigate }) {
   const countUpStartTimeRef = useRef(null); // Count up
   const targetTimeRef = useRef(null);
 
-  console.log('initial duration: ', duration)
-  console.log('timeLeft: ', timeLeft)
-
   // Count down (button red)
   useEffect(() => {
     if (isCountdownRunning) {
@@ -44,7 +41,7 @@ export default function ReflexTest({ onNavigate }) {
 
         if (remaining <= 0) {
           setIsButtonGreen(true);
-          console.log('timer complete, turn button green');
+          setIsCountUpRunning(true);
           setIsCountdownRunning(false);
         }
       }, 10);
@@ -64,7 +61,6 @@ export default function ReflexTest({ onNavigate }) {
       countUpIntervalRef.current = setInterval(() => {
         const now = Date.now();
         const elapsed = now - countUpStartTimeRef.current;
-        
         setFinalTime(elapsed);
       }, 10);
     } else {
@@ -82,11 +78,12 @@ export default function ReflexTest({ onNavigate }) {
   
   const handleStartPress = () => {
     setIsCountdownRunning(!isCountdownRunning);
-    console.log('isCountdownRunning: ', isCountdownRunning)
   };
 
   const handleGoPress = () => {
     console.log('handle go press')
+    console.log('final time: ', finalTime)
+    setIsCountUpRunning(false);
   }
 
   const handleWrongPress = () => {
@@ -100,17 +97,18 @@ export default function ReflexTest({ onNavigate }) {
   const formatTime = (ms) => {
     const totalSeconds = Math.floor(ms / 1000);
     const milliseconds = Math.floor((ms % 1000) / 10);
+    const secondsStr = String(totalSeconds).padStart(2, '0');
     
     return `${secondsStr}:${String(milliseconds).padStart(2, '0')}`;
   };
 
   const getResultMessage = () => {
-    if (finalTime === null) return '';
-    if (finalTime <= 10) return 'Incredible!';
+    if (finalTime <= 10) return 'INCONCEIVABLE!!';
+    if (finalTime <= 30) return 'Incredible!';
     if (finalTime <= 100) return 'Amazing!';
     if (finalTime <= 500) return 'Great job!';
     if (finalTime <= 1000) return 'Good job!';
-    if (finalTime <= 3000) return 'Timed Out. Better luck next time!'
+    return 'Better luck next time!'
   };
 
   return (
@@ -123,29 +121,16 @@ export default function ReflexTest({ onNavigate }) {
       </TouchableOpacity>
       <Text style={styles.title}>Reflex Test</Text>
       <Text style={styles.subtitle}>Press the button as quickly as you can when it turns green!</Text>
-      {/* <View style={styles.timerContainer}>
-        {isVisible ? (
+      <View style={styles.timerContainer}>
+        {finalTime && !isCountUpRunning ? (
           <>
-            <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
-            {finalTime !== null && (
-              <Text style={styles.result}>{getResultMessage()}</Text>
-            )}
+            <Text style={styles.timer}>{formatTime(finalTime)}</Text>
+            <Text style={styles.result}>{getResultMessage()}</Text>
           </>
-        ) : (
-          <Text style={styles.hiddenText}>Try to press Stop at exactly 0!</Text>
-        )}
-      </View> */}
-
-      {/* {(isRunning || finalTime === null) && (
-        <TouchableOpacity
-          style={[styles.button, isRunning && styles.buttonRunning]}
-          onPress={handlePress}
-        >
-          <Text style={styles.buttonText}>
-            {isRunning ? 'STOP' : 'START'}
-          </Text>
-        </TouchableOpacity>
-      )} */}
+        ) : isCountdownRunning ? (
+          <Text style={styles.hiddenText}>Get ready...</Text>
+        ) : null}
+      </View>
       <TouchableOpacity
         style={[styles.button, isCountdownRunning && styles.buttonRunning, isButtonGreen && styles.buttonGreen]}
         onPress={isCountdownRunning ? handleWrongPress : isButtonGreen ? handleGoPress : handleStartPress}
