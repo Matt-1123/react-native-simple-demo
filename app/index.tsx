@@ -19,29 +19,29 @@ const HomePage = ({ onNavigate }) => {
   } else {
   return (
       <View className="flex-1 bg-blue-50 items-center justify-center px-6">
-        <Text style={{ fontFamily: 'PressStart2P_400Regular' }} className="text-4xl text-blue-900 mb-4 text-center">
+        <Text className="font-press-start-2p text-4xl text-blue-900 mb-4 text-center">
           Welcome to Mini Game Hub!
         </Text>
-        <Text className="text-lg text-gray-700 text-center mb-8">
+        <Text className="font-press-start-2p text-lg text-gray-700 text-center mb-8">
           Choose an option below
         </Text>
         <TouchableOpacity 
           onPress={() => onNavigate('countdown-timer')}
           className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
         >
-          <Text className='text-white font-semibold text-lg'>Countdown Timer</Text>
+          <Text className='font-press-start-2p text-white font-semibold text-lg'>Countdown Timer</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           onPress={() => onNavigate('reflex-test')}
           className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
         >
-          <Text className='text-white font-semibold text-lg'>Reflex Test</Text>
+          <Text className='font-press-start-2p text-white font-semibold text-lg'>Reflex Test</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => onNavigate('about')}
           className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
         >
-          <Text className="text-white font-semibold text-lg">About</Text>
+          <Text className="font-press-start-2p text-white font-semibold text-lg">About</Text>
         </TouchableOpacity>
       </View>
     );
