@@ -11,6 +11,7 @@
     "lint": "expo lint"
   },
   "dependencies": {
+    "@expo-google-fonts/press-start-2p": "^0.4.1",
     "@expo/vector-icons": "^15.0.3",
     "@react-native-community/slider": "^5.1.1",
     "@react-navigation/bottom-tabs": "^7.4.0",
