@@ -12,7 +12,7 @@ import '../global.css';
 const HomePage = ({ onNavigate }) => {
   return (
     <View className="flex-1 bg-blue-50 items-center justify-center px-6">
-      <Text className="text-4xl font-bold text-blue-900 mb-4 text-center">
+      <Text style={{ fontFamily: 'PressStart2P' }} className="text-4xl font-bold text-blue-900 mb-4 text-center">
         Welcome to Mini Game Hub!
       </Text>
       <Text className="text-lg text-gray-700 text-center mb-8">
