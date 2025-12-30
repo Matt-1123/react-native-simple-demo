@@ -19,7 +19,7 @@ const HomePage = ({ onNavigate }) => {
   } else {
   return (
       <View className="flex-1 bg-blue-50 items-center justify-center px-6">
-        <Text className="font-press-start-2p text-4xl text-blue-900 mb-4 text-center">
+        <Text className="font-press-start-2p text-4xl text-[#0000BC] mb-4 text-center">
           Welcome to Mini Game Hub!
         </Text>
         <Text className="font-press-start-2p text-lg text-gray-700 text-center mb-8">
@@ -27,21 +27,22 @@ const HomePage = ({ onNavigate }) => {
         </Text>
         <TouchableOpacity 
           onPress={() => onNavigate('countdown-timer')}
-          className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
+          className="inline-block min-w-[275px] w-auto m-4 px-3 py-3 text-[2.2rem] uppercase text-white bg-[#881400] hover:bg-[#881400] focus:bg-[#881400] cursor-pointer box-border border-[6px] border-t-white/50 border-l-black/50 border-r-white/50 border-b-black/50 [border-style:inset]"
         >
           <Text className='font-press-start-2p text-white font-semibold text-lg'>Countdown Timer</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           onPress={() => onNavigate('reflex-test')}
-          className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
+          className="inline-block min-w-[275px] w-auto m-4 px-3 py-3 text-[2.2rem] uppercase text-white bg-[#0000BC] hover:bg-[#0000BC] focus:bg-[#0000BC] cursor-pointer box-border border-[6px] border-t-white/50 border-l-black/50 border-r-white/50 border-b-black/50 [border-style:inset]"
         >
-          <Text className='font-press-start-2p text-white font-semibold text-lg'>Reflex Test</Text>
+          <Text className='font-press-start-2p text-white font-semibold text-lg text-center'>Reflex Test</Text>
         </TouchableOpacity>
+        {/* 0000BC */}
         <TouchableOpacity
           onPress={() => onNavigate('about')}
-          className="bg-blue-600 px-8 py-4 rounded-lg shadow-lg mb-4"
+          className="inline-block min-w-[275px] w-auto m-4 px-3 py-3 text-[2.2rem] uppercase text-white bg-[#7C7C7C] hover:bg-[#BCBCBC] focus:bg-[#BCBCBC] cursor-pointer box-border border-[6px] border-t-white/50 border-l-black/50 border-r-white/50 border-b-black/50 [border-style:inset]"
         >
-          <Text className="font-press-start-2p text-white font-semibold text-lg">About</Text>
+          <Text className="font-press-start-2p text-white font-semibold text-lg text-center">About</Text>
         </TouchableOpacity>
       </View>
     );
